@@ -21,7 +21,7 @@ app.listen(port, () => {
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/fantasticAPI', {
+mongoose.connect('mongodb+srv://prajwalmogra:9rwzWpzDX8bZhyJE@cluster0.0ubttmb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
