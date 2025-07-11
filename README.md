@@ -17,9 +17,6 @@ Welcome to the **User Management API** – a simple Node.js + Express RESTful AP
 
 ---
 
-
----
-
 ## 🚀 API Endpoints
 
 ### 🔓 Public Endpoints
