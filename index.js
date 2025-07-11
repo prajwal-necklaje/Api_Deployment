@@ -1,31 +1,36 @@
 require('dotenv').config();
 
 const express = require('express');
+const mongoose = require('mongoose'); // Make sure this is at the top
 const app = express();
 const port = process.env.PORT || 3000;
 
 const userRoutes = require('./routes/users');
 const logger = require('./middleware/logger');
 
+// Middleware
 app.use(express.json());
-app.use(logger);            // Custom middleware
+app.use(logger);
+
+// Routes
 app.use('/users', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to your Fantastic API!');
 });
 
-app.listen(port, () => {
-  console.log(`🔥 API is running on port ${port}`);
-});
-
-const mongoose = require('mongoose');
-
-mongoose.connect('mongodb+srv://prajwalmogra:9rwzWpzDX8bZhyJE@cluster0.0ubttmb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-mongoose.connection.once('open', () => {
+// ✅ MongoDB connection using Mongoose
+mongoose.connect(process.env.MONGO_URI, {
+  serverApi: { version: '1', strict: true, deprecationErrors: true }
+})
+.then(() => {
   console.log('✅ Connected to MongoDB');
+
+  // Only start server if DB is connected
+  app.listen(port, () => {
+    console.log(`🔥 API is running on port ${port}`);
+  });
+})
+.catch((err) => {
+  console.error('❌ MongoDB connection error:', err);
 });
